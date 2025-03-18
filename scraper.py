@@ -3,10 +3,14 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-driver.get('https://play.getfliff.com/')
+mobile_emulation = { "deviceName": "iPhone 12 Pro" }
 
-time.sleep(10)  # Keeps the browser open for 10 seconds
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+driver.get('https://sports.getfliff.com/')
+
+time.sleep(10)  # Check the mobile view opens correctly
 
 driver.quit()
-
