@@ -25,17 +25,17 @@ def scrape_fliff_odds():
         for elem in odds_elements:
             odds_value = elem.text.strip()
 
-            # Move up to the shared container:
-            container = elem.find_element(By.XPATH, './ancestor::div[contains(@class, "card-shared-container")]')
-
-            # Extract event name from within that container
-            event_name_element = container.find_element(By.CLASS_NAME, 'card-note__title')
-            event_name = event_name_element.text.strip()
+            try:
+                container = elem.find_element(By.XPATH, './ancestor::div[contains(@class, "card-shared-container")]')
+                event_name_element = container.find_element(By.CLASS_NAME, 'card-note__title')
+                event_name = event_name_element.text.strip()
+            except:
+                event_name = "Unknown Event"  # fallback in case something breaks
 
             odds_data.append({
                 "platform": "Fliff",
                 "event_name": event_name,
-                "team_or_outcome": "",   # We can refine this later if teams are separately listed
+                "team_or_outcome": "",   
                 "odds_value": odds_value,
                 "odds_type": "moneyline",
             })
